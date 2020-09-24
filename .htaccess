@@ -1,0 +1,4 @@
+RewriteEngine on
+      RewriteRule ^([30-200]+)/([0-200]+)$ product.php?id=$1&da=$2 [QSA]
+      RewriteRule ^abc product.php?id=5
+      RewriteRule ^([A-Za-z0-9]*)$ index.php?page=$1
