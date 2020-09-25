@@ -9,7 +9,7 @@ ini_set('display_startup_errors', 1);
         require_once $_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $classname).".php";
     });
     
-    new \model\migrations\Migrate();
+    
     
     
 ?>

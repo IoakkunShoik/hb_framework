@@ -52,6 +52,17 @@ class LazyDeveloper{
                     throw new \Exception('File exists');
                 }
                 break;
+            case 'makeView':
+                $pathToView = $_SERVER["DOCUMENT_ROOT"].'/view/'.$_GET["name"].'/';
+                if(is_dir($path)) throw new \Exception("View exists");
+                $template = file_get_contents('templates/view.php');
+                mkdir($pathToView);
+                mkdir($pathToView.'blocks');
+                mkdir($pathToView.'css');
+                mkdir($pathToView.'js');
+                $viewFile = fopen($pathToView.'page.html', 'w');
+                fwrite($viewFile, $template);
+
         }
 
     }
