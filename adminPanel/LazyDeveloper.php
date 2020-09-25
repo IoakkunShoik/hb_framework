@@ -23,10 +23,34 @@ class LazyDeveloper{
             ';
             return -1;
         }
-        
-        switch($command){
-            default:
+        echo file_get_contents('LazyDevPanel.html');
+        switch($_GET['command']){
+            
+            case 'makeMigration':
+                $template = file_get_contents('templates/migration.php');
+                $template = str_replace('@migrationName', $_GET['name'], $template);
+                if(!file_exists($_SERVER["DOCUMENT_ROOT"].'/model/migrations/'.$_GET["name"].'_table.php')){
+                    $migrationFile = fopen($_SERVER["DOCUMENT_ROOT"].'/model/migrations/'.$_GET["name"].'_table.php', 'w');
+                    fwrite($migrationFile, $template);
+                    echo '<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=/adminPanel/LazyDeveloper.php">';
+                }else{
+                    throw new \Exception('File exists');
+                }
+                break;
+            case 'migrate':
+                new \model\migrations\Migrate();
+                break;
 
+            case 'makeController':
+                $template = file_get_contents('templates/controller.php');
+                $template = str_replace('@namecontroller', ucfirst($_GET['name']), $template);
+                if(!file_exists($_SERVER["DOCUMENT_ROOT"].'/controller/'.ucfirst($_GET["name"]).'_route.php')){
+                    $controllerFile = fopen($_SERVER["DOCUMENT_ROOT"].'/controller/'.ucfirst($_GET["name"]).'_route.php', 'w');
+                    fwrite($controllerFile, $template);
+                    echo '<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=/adminPanel/LazyDeveloper.php">';
+                }else{
+                    throw new \Exception('File exists');
+                }
                 break;
         }
 

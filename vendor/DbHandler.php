@@ -15,7 +15,7 @@ class DbHandler
 
     function __construct($table)
     {
-        require_once $_SERVER['DOCUMENT_ROOT'].'/adminPanel/dbsetup.php';
+        require $_SERVER['DOCUMENT_ROOT'].'/adminPanel/dbsetup.php';
         
         $dsn  = $db_setup['db_serv'] .
                 ':host='   . $db_setup['db_host'] . 
