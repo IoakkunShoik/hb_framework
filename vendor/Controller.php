@@ -4,12 +4,17 @@ namespace vendor;
 class Controller
 {
     function __construct(){
-        if(isset($_GET['page'])){
+        if(!isset($_GET['page']) || $_GET['page']==""){
             $call = 'main_route';
         }else{
             $call = $_GET['page'].'_route';
         }
-        $this->$call();
+        try{
+            $this->$call();
+        }
+        catch(Exception $e){
+           echo '<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=/">';
+        };
     }
     protected function render($view=NULL, $values=NULL){
         $view = file_get_contents("view/$view/page.html");

@@ -3,12 +3,17 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     spl_autoload_register(function($classname){
-        
-        require_once $_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $classname).".php";
+        if(file_exists($_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $classname).".php")){
+            require_once $_SERVER['DOCUMENT_ROOT'].'/'.str_replace('\\', '/', $classname).".php";
+        } else {
+            //echo '<META HTTP-EQUIV="REFRESH" CONTENT="0;URL=/main">';
+        }
     });
     
-    $call = 'controller\\'.ucfirst($_GET['page']).'_route';
-    if(isset($_GET['page'])){
+    if(!isset($_GET['page']) || $_GET['page']==""){
         $call = 'controller\\Main_route';
+    }else{
+        
+        $call = 'controller\\'.ucfirst($_GET['page']).'_route';
     }
     new $call();

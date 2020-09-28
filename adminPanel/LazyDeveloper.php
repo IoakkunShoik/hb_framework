@@ -8,7 +8,7 @@ spl_autoload_register(function($classname){
 
 class LazyDeveloper{
     private const PASSWORD = "123";
-    function __construct($command){
+    function __construct($command=NULL){
         
         if($_SESSION['LAZY']!=$this::PASSWORD){
             $_SESSION['LAZY']=$_POST['LAZY'];
@@ -25,7 +25,7 @@ class LazyDeveloper{
         }
         echo file_get_contents('LazyDevPanel.html');
         switch($_GET['command']){
-            
+##            
             case 'makeMigration':
                 $template = file_get_contents('templates/migration.php');
                 $template = str_replace('@migrationName', $_GET['name'], $template);
@@ -40,7 +40,7 @@ class LazyDeveloper{
             case 'migrate':
                 new \model\migrations\Migrate();
                 break;
-
+##
             case 'makeController':
                 $template = file_get_contents('templates/controller.php');
                 $template = str_replace('@namecontroller', ucfirst($_GET['name']), $template);
@@ -52,6 +52,7 @@ class LazyDeveloper{
                     throw new \Exception('File exists');
                 }
                 break;
+##
             case 'makeView':
                 $pathToView = $_SERVER["DOCUMENT_ROOT"].'/view/'.$_GET["name"].'/';
                 if(is_dir($path)) throw new \Exception("View exists");
@@ -68,4 +69,4 @@ class LazyDeveloper{
     }
 }
 
-    new LazyDeveloper('hello');
+    new LazyDeveloper();

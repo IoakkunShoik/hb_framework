@@ -15,15 +15,15 @@ class DbHandler
 
     function __construct($table)
     {
-        require $_SERVER['DOCUMENT_ROOT'].'/adminPanel/dbsetup.php';
+        require $_SERVER['DOCUMENT_ROOT'].'/config.php';
         
-        $dsn  = $db_setup['db_serv'] .
-                ':host='   . $db_setup['db_host'] . 
-                ';dbname=' . $db_setup['db_name'];
+        $dsn  = DB_SERVER .
+                ':host='   . DB_HOST . 
+                ';dbname=' . DB_NAME;
 
-        $this->db        = new \PDO($dsn, $db_setup["db_user"], $db_setup["db_pass"]);
+        $this->db        = new \PDO($dsn, DB_USER, DB_PASSWORD);
         $this->table     = $table;
-        $this->migration = str_replace('@DBNAME', $db_setup['db_name'], $this->migration);
+        $this->migration = str_replace('@DBNAME', DB_NAME, $this->migration);
         $this->col_count = $this->db->query("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME='$this->table'")->fetch()[0]-1;
 
     }
